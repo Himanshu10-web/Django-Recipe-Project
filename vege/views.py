@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from .models import *
+from django.contrib.auth.models import User
+from django.contrib import messages
 
 # Create your views here.
 def receipes(request):
@@ -55,3 +57,35 @@ def delete_receipe(request, id):
     queryset.delete()
     return redirect('/receipes')
 
+def login_user(request):
+    return render(request, 'login_user.html')
+
+def register_user(request):
+
+    if request.method == "POST":
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        users = User.objects.filter(username = username)
+
+        if users.exists():
+            messages.info(request, 'Username already taken')
+            return redirect('/register_user')
+        
+
+        user = User.objects.create(
+            first_name = first_name,
+            last_name = last_name,
+            username = username
+        )
+
+        
+        
+        user.set_password(password)
+        user.save()
+        messages.info(request, 'Account created successfully !!')
+
+        return redirect('/register_user/')
+    return render(request, 'register_user.html')
