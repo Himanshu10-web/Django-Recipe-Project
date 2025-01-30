@@ -34,6 +34,9 @@ urlpatterns = [
     path('about/', About_page, name = "about"),
     path('contact/', Contact_page, name = "contact"),
     path('admin/', admin.site.urls),
+
+    path('logout/', logout_user, name='logout_user'),
+   
     
 ]
 

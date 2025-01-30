@@ -41,7 +41,6 @@ INSTALLED_APPS = [
 ]
 
 External_Apps = {
-    'accounts',
     'home',
     'vege',
 }
